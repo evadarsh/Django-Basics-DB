@@ -3,4 +3,5 @@ from Admin import views
 app_name = 'webadmin'
 urlpatterns = [
     path('district/',views.district,name="district"),
+    path('branch/',views.branch,name="branch"),
 ]

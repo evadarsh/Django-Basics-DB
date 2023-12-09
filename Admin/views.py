@@ -16,3 +16,11 @@ def district(request):
         return redirect("webadmin:district")
     else:
         return render(request,"Admin/District.html")
+    
+def branch(request):
+    if request.method == "POST":
+        data = {"branch_name":request.POST.get("txt_branch")}
+        db.collection("tbl_branch").add(data)
+        return redirect("webadmin:branch")
+    else:
+        return render(request,"Admin/Branch.html")
