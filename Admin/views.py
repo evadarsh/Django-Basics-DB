@@ -1,0 +1,18 @@
+from django.shortcuts import render,redirect
+import firebase_admin
+from firebase_admin import storage,auth,credentials,firestore
+import pyrebase
+# Create your views here.
+
+cred = credentials.Certificate("DB\mainproject-122fe-firebase-adminsdk-odmtf-8b97e8e17a.json")
+app = firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
+def district(request):
+    if request.method == "POST":
+        data = {"district_name":request.POST.get("txt_district")}
+        db.collection("tbl_district").add(data)
+        return redirect("webadmin:district")
+    else:
+        return render(request,"Admin/District.html")
