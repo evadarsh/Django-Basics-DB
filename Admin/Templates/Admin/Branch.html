@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Branch</title>
 </head>
 <body>
     <form action="" method="post">
         {% csrf_token %}
         <table>
             <tr>
+                <td>District</td>
+                <td>Place</td>
                 <td>Branch</td>
                 <td><input type="text" name="txt_branch" id=""></td>
             </tr>
@@ -18,5 +20,20 @@
             </tr>
         </table>
     </form>
+    <table>
+        <tr>
+            <td>#</td>
+            <td>Branch</td>
+            <td>Action</td>
+        </tr>
+        {% for i in brn %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.branch.branch_name}}</td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
 </body>
 </html>

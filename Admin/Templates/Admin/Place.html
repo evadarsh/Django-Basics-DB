@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>District</title>
+    <title>Place</title>
 </head>
 <body>
     <form action="" method="post">
         {% csrf_token %}
         <table>
             <tr>
-                <td>District</td>
-                <td><input type="text" name="txt_district" id=""></td>
+                <td>Place</td>
+                <td><input type="text" name="txt_place" id=""></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Add"></td>
@@ -21,16 +21,17 @@
     <table>
         <tr>
             <td>#</td>
-            <td>District</td>
+            <td>place</td>
             <td>Action</td>
         </tr>
-        {% for i in dis %}
+        {% for i in plc %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{i.district.district_name}}</td>
+            <td>{{i.place.place_name}}</td>
             <td></td>
         </tr>
         {% endfor %}
     </table>
+    
 </body>
 </html>
