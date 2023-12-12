@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import firebase_admin
+from firebase_admin import storage,auth,credentials,firestore
+import pyrebase
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Admin',
     'User',
+    'Guest',
     ]
 
 MIDDLEWARE = [
@@ -123,3 +127,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+cred = credentials.Certificate("DB\mainproject-122fe-firebase-adminsdk-odmtf-8b97e8e17a.json")
+app = firebase_admin.initialize_app(cred)
