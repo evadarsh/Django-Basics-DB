@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Admin Profile</h1>
+    <table align="center" border="1">
+        <tr>
+            <td>Name</td>
+            <td>{{admin.admin_name}}</td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>{{admin.admin_contact}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{admin.admin_email}}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{admin.admin_address}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <a href="{% url 'webadmin:editprofile' %}">Editprofile</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

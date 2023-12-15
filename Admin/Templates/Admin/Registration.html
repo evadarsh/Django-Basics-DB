@@ -6,25 +6,25 @@
     <title>Registation Form</title>
 </head>
 <body>
-    <h1 style="text-align: center;">User Sign Up</h1>
+    <h1 style="text-align: center;">Admin Sign Up</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table align="center" border="1">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="txt_name" id="" value="{{user.user_name}}"></td>
+            <td><input type="text" name="txt_name" id="" value="{{admin.admin_name}}"></td>
         </tr>
         <tr>
             <td>Contact</td>
-            <td><input type="text" name="txt_contact" id="" value="{{user.user_contact}}"></td>
+            <td><input type="text" name="txt_contact" id="" value="{{admin.admin_contact}}"></td>
         </tr>
         <tr>
             <td>Email</td>
-            <td><input type="email" name="txt_email" id="" value="{{user.user_email}}"></td>
+            <td><input type="email" name="txt_email" id="" value="{{admin.admin_email}}"></td>
         </tr>
         <tr>
             <td>Address</td>
-            <td><input type="text" name="txt_address" id="" value="{{user.user_address}}"></td>
+            <td><input type="text" name="txt_address" id="" value="{{admin.admin_address}}"></td>
         </tr>
         <tr>
             <td>District</td>
@@ -63,7 +63,7 @@
         <tr>
         <tr>
             <td>Password</td>
-            <td><input type="text" name="txt_password" id="" value="{{user.user_password}}"></td>
+            <td><input type="text" name="txt_password" id="" value="{{admin.admin_password}}"></td>
         </tr>
         <tr>
             <td colspan="2" align="center"><input type="submit" value="Register"></td>

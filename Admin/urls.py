@@ -2,6 +2,11 @@ from django.urls import path,include
 from Admin import views
 app_name = 'webadmin'
 urlpatterns = [
+    path('home/',views.home,name="home"),
+    path('registration/',views.registration,name="registration"),
+    path('profile/',views.profile,name="profile"),
+    path('editprofile/',views.editprofile,name="editprofile"),
+    #path('changepassword/',views.changepassword,name="changepassword"),
     path('district/',views.district,name="district"),
     path('deldistrict/<str:id>',views.deldistrict,name="deldistrict"),
     path('updatedistrict/<str:id>',views.updatedistrict,name="updatedistrict"),

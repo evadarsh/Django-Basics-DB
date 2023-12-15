@@ -2,9 +2,85 @@ from django.shortcuts import render,redirect
 import firebase_admin
 from firebase_admin import storage,auth,credentials,firestore
 import pyrebase
-# Create your views here.
+
+config = {
+  "apiKey": "AIzaSyACpb3W02pzE0Q_lnJsC7LoiDvEVU0znPU",
+  "authDomain": "mainproject-122fe.firebaseapp.com",
+  "projectId": "mainproject-122fe",
+  "storageBucket": "mainproject-122fe.appspot.com",
+  "messagingSenderId": "797132027159",
+  "appId": "1:797132027159:web:551dd5a1eebcd9089cb352",
+  "measurementId": "G-7C4G2DT8T2",
+  "databaseURL":""
+}
+firebase = pyrebase.initialize_app(config)
+authe = firebase.auth()
+sd = firebase.storage()
 
 db = firestore.client()
+
+def home(request):
+    admin = db.collection("tbl_admin").document(request.session["aid"]).get().to_dict()
+    return render(request,"Admin/HomePage.html",{"admin":admin})
+
+def profile(request):
+    if 'aid' in request.session:
+        admin = db.collection("tbl_admin").document(request.session["aid"]).get().to_dict()
+        return render(request,"Admin/Profile.html",{'admin':admin})
+    else:
+        return redirect("webguest:login")
+
+def editprofile(request):
+    if 'aid' in request.session:
+        data = db.collection("tbl_admin").document(request.session["aid"]).get().to_dict()
+        if request.method == "POST":
+            data = {'admin_name':request.POST.get('txt_name'),'admin_contact':request.POST.get('txt_contact'),'admin_address':request.POST.get('txt_address')}
+            db.collection("tbl_admin").document(request.session["aid"]).update(data)
+            return redirect("webadmin:profile")
+        else:
+            return render(request,"Admin/EditProfile.html",{'admin':data})
+    else:
+        return redirect("webguest:login")
+
+def registration(request):
+    dis = db.collection("tbl_district").stream()
+    dis_data = []
+    for i in dis:
+        data = i.to_dict()
+        dis_data.append({"district":data,"id":i.id})
+    
+    cat = db.collection("tbl_category").stream()
+    cat_data = []
+    for i in cat:
+        data = i.to_dict()
+        cat_data.append({"category":data,"id":i.id})
+    
+    if request.method == "POST":
+        email = request.POST.get("txt_email")
+        password = request.POST.get("txt_password")
+        try:
+            admin = firebase_admin.auth.create_user(email=email,password=password)
+        except (firebase_admin._auth_utils.EmailAlreadyExistsError,ValueError) as error:
+            return render(request,"Guest/Registration.html",{"msg":error})
+
+        image = request.FILES.get("txt_photo")
+        if image:
+            path = "Example/" + image.name
+            sd.child(path).put(image)
+            download_url = sd.child(path).get_url(None)
+        
+        admin = {"admin_id":(admin.uid),
+                "admin_name":request.POST.get("txt_name"),
+                "admin_contact":request.POST.get("txt_contact"),
+                "admin_email":request.POST.get("txt_email"),
+                "admin_address":request.POST.get("txt_address"),
+                "admin_place":request.POST.get("sel_place"),
+                "admin_subcategory":request.POST.get("sel_place"),
+                "admin_photo":(download_url),}
+        db.collection("tbl_admin").add(admin)
+        return redirect("webguest:registration")
+    else:
+        return render(request,"Guest/Registration.html",{"district":dis_data,"category":cat_data})
 
 def district(request):
     dis = db.collection("tbl_district").stream()
